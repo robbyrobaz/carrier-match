@@ -1,0 +1,968 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-03-02",
+    "source": "carrier-match insurance underwriting database",
+    "carriers_included": 5,
+    "conditions_total": 95
+  },
+  "carriers": [
+    {
+      "id": "accendo",
+      "name": "Accendo (Aetna)",
+      "parent_company": "Aetna/CVS Health",
+      "type": "Final Expense",
+      "products": ["Level Preferred", "Level Standard", "Modified"],
+      "issue_ages": {"min": 45, "max": 85},
+      "face_amounts": {"min": 2000, "max": 50000},
+      "website": "aetna.com",
+      "support_phone": "1-800-ACCENDO"
+    },
+    {
+      "id": "new_vista",
+      "name": "New Vista",
+      "parent_company": "New Vista Insurance",
+      "type": "Final Expense",
+      "products": ["Standard", "Preferred"],
+      "issue_ages": {"min": 45, "max": 85},
+      "face_amounts": {"min": 2000, "max": 50000},
+      "website": "newvista.com",
+      "support_phone": ""
+    },
+    {
+      "id": "senior_choice",
+      "name": "Senior Choice",
+      "parent_company": "Senior Choice Life Insurance",
+      "type": "Final Expense / Whole Life",
+      "products": ["Immediate Benefit", "Graded Benefit", "Return of Premium"],
+      "issue_ages": {"min": 50, "max": 85},
+      "face_amounts": {"min": 5000, "max": 100000},
+      "website": "seniorchoiceinsurance.com",
+      "support_phone": "1-800-736-7311"
+    },
+    {
+      "id": "plan_right",
+      "name": "Plan Right",
+      "parent_company": "Plan Right Insurance",
+      "type": "Final Expense",
+      "products": ["ROP", "Graded"],
+      "issue_ages": {"min": 45, "max": 85},
+      "face_amounts": {"min": 2000, "max": 50000},
+      "website": "planrightinsurance.com",
+      "support_phone": ""
+    },
+    {
+      "id": "living_promise",
+      "name": "Living Promise",
+      "parent_company": "Mutual of Omaha",
+      "type": "Final Expense / Whole Life",
+      "products": ["Level Benefit", "Graded Benefit"],
+      "issue_ages": {"min": 45, "max": 85},
+      "face_amounts": {"min": 5000, "max": 100000},
+      "website": "mutualofomaha.com",
+      "support_phone": "1-800-775-7896"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "aids_hiv_arc",
+      "label": "AIDS/HIV/ARC",
+      "category": "infectious_disease",
+      "carriers": {
+        "accendo": "DECLINE",
+        "new_vista": "DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "DECLINE",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "afib_atrial_fibrillation",
+      "label": "Atrial Fibrillation / Irregular Heartbeat",
+      "category": "cardiac",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked - Allowed",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked - Allowed"
+      }
+    },
+    {
+      "id": "alcohol_drug_abuse",
+      "label": "Alcohol / Drug Abuse",
+      "category": "behavioral",
+      "carriers": {
+        "accendo": "Within 2 years - Guaranteed Issue",
+        "new_vista": "Treatment within 2 years - Modified",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Treated within 2 years - ROP",
+        "living_promise": "Treatment within 2 years - Basic"
+      }
+    },
+    {
+      "id": "als",
+      "label": "ALS (Lou Gehrig's Disease)",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "DECLINE",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "alzheimers_dementia",
+      "label": "Alzheimer's / Dementia / Memory Loss",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "DECLINE",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "amputation",
+      "label": "Amputation",
+      "category": "orthopedic",
+      "carriers": {
+        "accendo": "Due to Diabetes - DECLINE",
+        "new_vista": "Modified; Due to any disease/Diabetes - DECLINE",
+        "senior_choice": "Due to Diabetes - Modified",
+        "plan_right": "Caused by disease - DECLINE",
+        "living_promise": "DECLINE; Due to Diabetes - DECLINE"
+      }
+    },
+    {
+      "id": "aneurysm",
+      "label": "Aneurysm",
+      "category": "cardiac",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Within 1 Year - Modified",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Within 2 years - ROP",
+        "living_promise": "Not allowed - Asked"
+      }
+    },
+    {
+      "id": "angina",
+      "label": "Angina (Chest Pain)",
+      "category": "cardiac",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "Treated <1yr - Modified; 1-2yrs - Standard; >2yrs - Preferred",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Within 2 years - ROP",
+        "living_promise": "Treated <1yr - Basic; Within 2 years - Standard"
+      }
+    },
+    {
+      "id": "angioplasty",
+      "label": "Angioplasty",
+      "category": "cardiac_procedure",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "See Heart Surgery",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "See Heart Surgery"
+      }
+    },
+    {
+      "id": "arthritis",
+      "label": "Arthritis",
+      "category": "rheumatological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked - Allowed",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked - Allowed"
+      }
+    },
+    {
+      "id": "asthma_chronic",
+      "label": "Asthma (Chronic)",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Standard",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked - Allowed"
+      }
+    },
+    {
+      "id": "autism",
+      "label": "Autism",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "See Mental Incapacity",
+        "senior_choice": "Graded",
+        "plan_right": "Not asked",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "bipolar",
+      "label": "Bipolar Disorder",
+      "category": "mental_health",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Preferred",
+        "senior_choice": "Graded",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Preferred"
+      }
+    },
+    {
+      "id": "black_lung",
+      "label": "Black Lung",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked - Allowed",
+        "senior_choice": "Graded",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked - Allowed"
+      }
+    },
+    {
+      "id": "blood_clots",
+      "label": "Blood Clots",
+      "category": "hematologic",
+      "carriers": {
+        "accendo": "See Stent and check Med List",
+        "new_vista": "Not asked - Ask about stents/heart surgery",
+        "senior_choice": "See Stent",
+        "plan_right": "Surgical procedure within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "See Stent"
+      }
+    },
+    {
+      "id": "blood_disorder",
+      "label": "Blood Disorder (Polycythemia, Thrombocytopenia, Hemophilia)",
+      "category": "hematologic",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Graded",
+        "plan_right": "See Blood Clotting",
+        "living_promise": "Not asked - Allowed"
+      }
+    },
+    {
+      "id": "bone_marrow_transplant",
+      "label": "Bone Marrow Transplant",
+      "category": "oncology",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "bronchitis_chronic",
+      "label": "Bronchitis (Chronic)",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Not asked - Check inhalers/meds",
+        "new_vista": "Standard",
+        "senior_choice": "Not asked - Check inhalers/meds",
+        "plan_right": "Treated within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Not asked - Check inhalers/meds"
+      }
+    },
+    {
+      "id": "cancer_other",
+      "label": "Cancer (Other than Basal Cell)",
+      "category": "oncology",
+      "carriers": {
+        "accendo": "Metastatic/Recurrent - DECLINE; Within 2 years - Guaranteed Issue; >2 years - Allowed",
+        "new_vista": "Current OR within 2 years OR recurring - DECLINE; Basal/Squamous - Preferred; >2 years - Preferred",
+        "senior_choice": "Recurring or current - DECLINE; Within 3 years - Modified",
+        "plan_right": "Current - DECLINE; Recurring/Within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Current - DECLINE; <3 years - Basic"
+      }
+    },
+    {
+      "id": "cerebral_palsy",
+      "label": "Cerebral Palsy",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "DECLINE",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Diagnosed/Treated within 3 years - Graded",
+        "living_promise": "Not asked - Allowed"
+      }
+    },
+    {
+      "id": "chronic_pain",
+      "label": "Chronic Pain (6+ narcotic fills)",
+      "category": "pain_management",
+      "carriers": {
+        "accendo": "Check Med List",
+        "new_vista": "Check Meds",
+        "senior_choice": "Check Med List",
+        "plan_right": "Check Med List",
+        "living_promise": "Check Meds"
+      }
+    },
+    {
+      "id": "cirrhosis",
+      "label": "Cirrhosis",
+      "category": "hepatic",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "Treated within 2 years - Modified",
+        "senior_choice": "Stage C - DECLINE; Stage A or B - Graded",
+        "plan_right": "Treated within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "chf",
+      "label": "Congestive Heart Failure / Heart Failure Diastolic",
+      "category": "cardiac",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "DECLINE",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "DECLINE",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "coronary_artery_disease",
+      "label": "Coronary Artery Disease",
+      "category": "cardiac",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "See Heart Disease",
+        "senior_choice": "See Heart Disease",
+        "plan_right": "ROP",
+        "living_promise": "See Heart Disease"
+      }
+    },
+    {
+      "id": "copd",
+      "label": "COPD",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "Standard",
+        "senior_choice": "Graded",
+        "plan_right": "Treated within 2 years - ROP; Within 3 years - Graded; >3 years - Immediate",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "crohns_disease",
+      "label": "Crohn's Disease",
+      "category": "gastrointestinal",
+      "carriers": {
+        "accendo": "Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked - Allowed"
+      }
+    },
+    {
+      "id": "cystic_fibrosis",
+      "label": "Cystic Fibrosis",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Guaranteed",
+        "new_vista": "DECLINE",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "dementia",
+      "label": "Dementia",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "DECLINE",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "depression",
+      "label": "Depression",
+      "category": "mental_health",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "If Bipolar - Graded",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "diabetes",
+      "label": "Diabetes",
+      "category": "metabolic",
+      "carriers": {
+        "accendo": "Allowed - See Diabetic Complications",
+        "new_vista": "Allowed - See Diabetic Complications",
+        "senior_choice": "Allowed - See Diabetic Complications",
+        "plan_right": "Insulin prior to age 50 - ROP; otherwise immediate",
+        "living_promise": "Allowed - See Diabetic Complications"
+      }
+    },
+    {
+      "id": "diabetic_complications",
+      "label": "Diabetic Complications (Insulin Shock, Coma, Retinopathy, Nephropathy, Neuropathy)",
+      "category": "metabolic",
+      "carriers": {
+        "accendo": "Within 2 years - Guaranteed Issue",
+        "new_vista": "Amputation - DECLINE; Coma/Shock/Neuropathy/Nephropathy/Retinopathy - Modified",
+        "senior_choice": "Insulin Shock/Coma/Amputation - Modified; All others - Preferred",
+        "plan_right": "Diagnosed/treated for complications - ROP",
+        "living_promise": "Insulin Shock/Coma/Amputation - DECLINE; Neuropathy/PVD/Retinopathy - Basic"
+      }
+    },
+    {
+      "id": "dialysis",
+      "label": "Dialysis",
+      "category": "renal",
+      "carriers": {
+        "accendo": "Kidney Dialysis - Guaranteed Issue",
+        "new_vista": "Within 1 year - DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "DECLINE",
+        "living_promise": "Within 1 year - DECLINE"
+      }
+    },
+    {
+      "id": "downs_syndrome",
+      "label": "Down's Syndrome",
+      "category": "genetic",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "See Mental Incapacity",
+        "senior_choice": "Graded",
+        "plan_right": "See Mental Incapacity",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "dui",
+      "label": "DUI",
+      "category": "behavioral",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Within 2 years - Modified",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Within 2 years"
+      }
+    },
+    {
+      "id": "emphysema",
+      "label": "Emphysema (Chronic)",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "Standard",
+        "senior_choice": "Graded",
+        "plan_right": "Treated within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "epilepsy_seizures",
+      "label": "Epilepsy / Seizures",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Within 3 years - Graded",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "felony",
+      "label": "Felony",
+      "category": "legal",
+      "carriers": {
+        "accendo": "Within 6 months - Guaranteed Issue",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "heart_attack",
+      "label": "Heart Attack",
+      "category": "cardiac_event",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "Within 1 year - Modified; 1-2 years - Standard; >2 years - Preferred",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Within 1 year - Basic; Within 2 years - Standard"
+      }
+    },
+    {
+      "id": "heart_surgery",
+      "label": "Heart Surgery",
+      "category": "cardiac_procedure",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "Within 1 year - Modified; 1-2 years - Standard; >2 years - Preferred",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Within 1 year - Basic; Within 2 years - Standard"
+      }
+    },
+    {
+      "id": "heart_valve_replacement",
+      "label": "Heart Valve Replacement",
+      "category": "cardiac_procedure",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "Within 1 year - Modified; 1-2 years - Standard; >2 years - Preferred",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Within 1 year - Basic; Within 2 years - Standard"
+      }
+    },
+    {
+      "id": "hepatitis_a",
+      "label": "Hepatitis A",
+      "category": "infectious_disease",
+      "carriers": {
+        "accendo": "Allowed",
+        "new_vista": "Within 2 years - Modified",
+        "senior_choice": "Chronic or current - Graded",
+        "plan_right": "Chronic or treated within 2 years - ROP",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "hepatitis_b",
+      "label": "Hepatitis B",
+      "category": "infectious_disease",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "Within 2 years - Modified",
+        "senior_choice": "Chronic or current - Graded",
+        "plan_right": "Chronic or treated within 2 years - ROP",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "hepatitis_c",
+      "label": "Hepatitis C",
+      "category": "infectious_disease",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "Within 2 years - Modified",
+        "senior_choice": "Chronic or current - Graded",
+        "plan_right": "Chronic or treated within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "huntingtons_disease",
+      "label": "Huntington's Disease",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "DECLINE",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "illegal_drugs",
+      "label": "Illegal Drugs / Drug Use",
+      "category": "behavioral",
+      "carriers": {
+        "accendo": "Within 2 years - Guaranteed Issue",
+        "new_vista": "Treatment within 2 years - Modified",
+        "senior_choice": "See Felony or DUI",
+        "plan_right": "Used within 2 years - ROP",
+        "living_promise": "Within 2 years - Basic"
+      }
+    },
+    {
+      "id": "jail_incarcerated",
+      "label": "Jail / Incarcerated",
+      "category": "legal",
+      "carriers": {
+        "accendo": "DECLINE",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "DECLINE",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "kidney_disease",
+      "label": "Kidney Disease / Disorder / Failure",
+      "category": "renal",
+      "carriers": {
+        "accendo": "Chronic - Guaranteed Issue",
+        "new_vista": "Graded",
+        "senior_choice": "Graded",
+        "plan_right": "Dialysis - DECLINE; Failure/Disease - ROP",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "liver_disease",
+      "label": "Liver Disease",
+      "category": "hepatic",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "Graded",
+        "senior_choice": "Graded",
+        "plan_right": "Liver failure - DECLINE; <3 years - Graded",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "lupus",
+      "label": "Lupus (Systemic Lupus Erythematosus)",
+      "category": "rheumatological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Graded",
+        "senior_choice": "Graded",
+        "plan_right": "Treated/Diagnosed within 2 years - ROP",
+        "living_promise": "Standard"
+      }
+    },
+    {
+      "id": "melanoma",
+      "label": "Melanoma",
+      "category": "oncology",
+      "carriers": {
+        "accendo": "Malignant - DECLINE",
+        "new_vista": "Within 3 years - Modified (excl. basal/squamous)",
+        "senior_choice": "Within 3 years - Modified (excl. basal/squamous)",
+        "plan_right": "See Cancer",
+        "living_promise": "Basal - Preferred; otherwise see cancer"
+      }
+    },
+    {
+      "id": "mental_incapacity",
+      "label": "Mental Incapacity / Retardation",
+      "category": "mental_health",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Graded",
+        "senior_choice": "Graded",
+        "plan_right": "DECLINE",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "multiple_sclerosis",
+      "label": "Multiple Sclerosis (MS)",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Diagnosed/treated within 3 years - Graded",
+        "living_promise": "Preferred"
+      }
+    },
+    {
+      "id": "neuropathy",
+      "label": "Neuropathy",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Due to diabetes - GI; not associated - See med list",
+        "new_vista": "Due to diabetes - Modified; other - See diabetic complications",
+        "senior_choice": "Insulin Shock/Coma/Amputation - Modified; others - Preferred",
+        "plan_right": "Due to diabetes prior to 50 - ROP; not due to diabetes - Immediate",
+        "living_promise": "Due to diabetes - Basic; Otherwise OK"
+      }
+    },
+    {
+      "id": "oxygen",
+      "label": "Oxygen Use",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Within 6 months - Guaranteed Issue",
+        "new_vista": "DECLINE",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "pacemaker_defibrillator",
+      "label": "Pacemaker / Defibrillator Implant",
+      "category": "cardiac_device",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "Within 1 year - Modified; 1-2 years - Standard; >2 years - Preferred",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Received within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Implanted <1yr - Basic; <2yrs - Standard; >2yrs - Preferred"
+      }
+    },
+    {
+      "id": "pancreatitis",
+      "label": "Pancreatitis",
+      "category": "pancreatic",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Chronic/treated within 2 years - ROP",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "parkinsons_disease",
+      "label": "Parkinson's Disease",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Allowed",
+        "new_vista": "Standard",
+        "senior_choice": "Graded",
+        "plan_right": "Treated/diagnosed within 3 years - Graded",
+        "living_promise": "Not applicable"
+      }
+    },
+    {
+      "id": "parole_probation",
+      "label": "Parole / Probation (Currently)",
+      "category": "legal",
+      "carriers": {
+        "accendo": "Within 6 months - Guaranteed Issue",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "pad_pvd",
+      "label": "PAD / PVD (Peripheral Artery/Vascular Disease)",
+      "category": "vascular",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "See Diabetic complication"
+      }
+    },
+    {
+      "id": "ptsd",
+      "label": "PTSD (Post-Traumatic Stress Disorder)",
+      "category": "mental_health",
+      "carriers": {
+        "accendo": "Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "pulmonary_fibrosis",
+      "label": "Pulmonary Fibrosis",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Ask about oxygen",
+        "new_vista": "DECLINE",
+        "senior_choice": "Ask about oxygen",
+        "plan_right": "Ask about oxygen",
+        "living_promise": "Ask about oxygen"
+      }
+    },
+    {
+      "id": "rheumatoid_arthritis",
+      "label": "Rheumatoid Arthritis",
+      "category": "rheumatological",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "sarcoidosis",
+      "label": "Sarcoidosis",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "schizophrenia",
+      "label": "Schizophrenia",
+      "category": "mental_health",
+      "carriers": {
+        "accendo": "Allowed",
+        "new_vista": "Preferred",
+        "senior_choice": "Graded",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Preferred"
+      }
+    },
+    {
+      "id": "seizures",
+      "label": "Seizures",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Within 3 years - Graded",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "sickle_cell_anemia",
+      "label": "Sickle Cell Anemia",
+      "category": "hematologic",
+      "carriers": {
+        "accendo": "Allowed",
+        "new_vista": "DECLINE",
+        "senior_choice": "Graded",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "sleep_apnea",
+      "label": "Sleep Apnea",
+      "category": "respiratory",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "See Oxygen Use",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "stent",
+      "label": "Stent",
+      "category": "cardiac_device",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue",
+        "new_vista": "Not asked - See Heart Surgery",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Within 2 years - ROP; Within 3 years - Graded",
+        "living_promise": "Within 1 year - Basic; Within 2 years - Standard"
+      }
+    },
+    {
+      "id": "stroke_tia",
+      "label": "Stroke / TIA Attack",
+      "category": "neurological",
+      "carriers": {
+        "accendo": "Within 1 year - Guaranteed Issue; TIA - Not asked - Allowed",
+        "new_vista": "Within 1 year - Modified; 1-2 years - Standard; >2 years - Preferred",
+        "senior_choice": "Within 2 years - Modified",
+        "plan_right": "Stroke/<2yrs - ROP; <3yrs - Graded",
+        "living_promise": "Within 1 year - Basic; Within 2 years - Standard"
+      }
+    },
+    {
+      "id": "terminal_illness",
+      "label": "Terminal Illness",
+      "category": "end_of_life",
+      "carriers": {
+        "accendo": "Death within 2 years - DECLINE",
+        "new_vista": "DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "Death in next 12 months - DECLINE",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "organ_transplant",
+      "label": "Organ Transplant",
+      "category": "surgical",
+      "carriers": {
+        "accendo": "Guaranteed Issue",
+        "new_vista": "DECLINE",
+        "senior_choice": "DECLINE",
+        "plan_right": "DECLINE",
+        "living_promise": "DECLINE"
+      }
+    },
+    {
+      "id": "tuberculosis",
+      "label": "Tuberculosis",
+      "category": "infectious_disease",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Graded",
+        "plan_right": "Not asked - Allowed",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "ulcerative_colitis",
+      "label": "Ulcerative Colitis",
+      "category": "gastrointestinal",
+      "carriers": {
+        "accendo": "Not asked - Allowed",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked - Allowed",
+        "plan_right": "Within 3 years - Graded",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "walker",
+      "label": "Walker (Use)",
+      "category": "mobility",
+      "carriers": {
+        "accendo": "Within 6 months - Guaranteed Issue",
+        "new_vista": "Not asked",
+        "senior_choice": "Not asked",
+        "plan_right": "Not asked",
+        "living_promise": "Not asked"
+      }
+    },
+    {
+      "id": "wheelchair",
+      "label": "Wheelchair / Electric Scooter / Electric Cart",
+      "category": "mobility",
+      "carriers": {
+        "accendo": "Within 6 months - Guaranteed Issue",
+        "new_vista": "Use Wheelchair or scooter - DECLINE",
+        "senior_choice": "Confined or due to diabetes - DECLINE",
+        "plan_right": "Due to Illness or Disease - DECLINE",
+        "living_promise": "Confined or due to diabetes - DECLINE"
+      }
+    }
+  ]
+}
