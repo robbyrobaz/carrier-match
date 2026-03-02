@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarrierMatch — Final Expense Insurance</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-light: #243358;
+    --green: #2ecc71;
+    --green-dark: #27ae60;
+    --yellow: #f39c12;
+    --blue: #3498db;
+    --red: #e74c3c;
+    --gray: #95a5a6;
+    --bg: #f0f2f5;
+    --white: #ffffff;
+    --text: #2c3e50;
+    --border: #dde1e7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; }
+
+  /* HEADER */
+  header { background: var(--navy); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+  .logo span { color: var(--green); }
+  .tagline { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+  /* LAYOUT */
+  .app { display: grid; grid-template-columns: 1fr 380px; gap: 0; min-height: calc(100vh - 52px); }
+  @media (max-width: 900px) { .app { grid-template-columns: 1fr; } }
+
+  /* FORM SIDE */
+  .form-side { padding: 20px 24px; overflow-y: auto; }
+  .section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
+  .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* TOGGLE PAIR */
+  .toggle-pair { display: flex; gap: 8px; margin-bottom: 12px; }
+  .toggle-pair label { font-size: 13px; color: #666; margin-bottom: 6px; display: block; }
+  .toggle-group { display: flex; border-radius: 8px; overflow: hidden; border: 2px solid var(--border); flex: 1; }
+  .toggle-group button { flex: 1; padding: 10px 8px; border: none; background: white; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.15s; color: #555; }
+  .toggle-group button.active { background: var(--navy); color: white; }
+  .toggle-group button:hover:not(.active) { background: #f0f2f5; }
+
+  /* NUMBER INPUT */
+  .num-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .num-row label { font-size: 13px; color: #666; min-width: 80px; }
+  .num-control { display: flex; align-items: center; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .num-control button { width: 40px; height: 44px; border: none; background: #f8f9fa; cursor: pointer; font-size: 20px; color: var(--navy); font-weight: 300; transition: background 0.1s; }
+  .num-control button:hover { background: #e9ecef; }
+  .num-control input { width: 70px; height: 44px; border: none; text-align: center; font-size: 18px; font-weight: 700; color: var(--navy); outline: none; }
+
+  /* SELECT */
+  select { width: 100%; padding: 10px 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 14px; background: white; color: var(--text); outline: none; margin-bottom: 12px; cursor: pointer; }
+  select:focus { border-color: var(--navy); }
+
+  /* HEIGHT ROW */
+  .height-row { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
+  .height-row label { font-size: 13px; color: #666; min-width: 60px; }
+  .height-row select { margin-bottom: 0; flex: 1; }
+
+  /* CONDITION CHIPS */
+  .chips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+  .chip { padding: 10px 12px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; background: white; color: #555; transition: all 0.15s; text-align: center; user-select: none; line-height: 1.3; }
+  .chip:hover { border-color: var(--navy); color: var(--navy); }
+  .chip.selected { background: var(--navy); border-color: var(--navy); color: white; }
+  .chip.warn { background: #fff3cd; border-color: var(--yellow); color: #856404; }
+  .chip.warn.selected { background: var(--yellow); border-color: var(--yellow); color: white; }
+
+  /* YES/NO PILLS */
+  .yn-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .yn-row label { font-size: 14px; flex: 1; min-width: 200px; }
+  .yn-btns { display: flex; border-radius: 8px; overflow: hidden; border: 2px solid var(--border); flex-shrink: 0; }
+  .yn-btns button { padding: 8px 20px; border: none; background: white; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.15s; color: #555; }
+  .yn-btns button.active-yes { background: var(--red); color: white; }
+  .yn-btns button.active-no { background: var(--green); color: white; }
+  .yn-btns button:hover:not(.active-yes):not(.active-no) { background: #f0f2f5; }
+
+  /* SLIDER */
+  .slider-wrap { padding: 4px 0 12px; }
+  .slider-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .slider-label span { font-size: 13px; color: #666; }
+  .slider-amount { font-size: 28px; font-weight: 800; color: var(--navy); }
+  input[type=range] { width: 100%; -webkit-appearance: none; height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--navy) 0%, var(--navy) var(--pct,50%), var(--border) var(--pct,50%)); outline: none; cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--navy); cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+
+  /* TIMING SUB-QUESTION */
+  .sub-q { background: #f8f9fa; border-radius: 8px; padding: 12px; margin-bottom: 12px; border-left: 3px solid var(--yellow); display: none; }
+  .sub-q.show { display: block; }
+  .sub-q label { font-size: 13px; font-weight: 600; color: #666; display: block; margin-bottom: 8px; }
+  .timing-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  .timing-btn { padding: 6px 14px; border: 2px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 13px; background: white; color: #555; transition: all 0.15s; }
+  .timing-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+  /* ALERT BOX */
+  .alert { border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; font-weight: 500; display: none; }
+  .alert.show { display: flex; align-items: flex-start; gap: 10px; }
+  .alert-warn { background: #fff3cd; border: 1px solid #ffc107; color: #856404; }
+  .alert-danger { background: #f8d7da; border: 1px solid #f5c2c7; color: #842029; }
+  .alert-info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* PRINT BUTTON */
+  .print-btn { background: var(--navy-light); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .print-btn:hover { background: var(--navy); }
+
+  /* RESULTS SIDE */
+  .results-side { background: var(--navy); padding: 16px; position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto; }
+  @media (max-width: 900px) { .results-side { position: relative; height: auto; top: 0; } }
+  .results-header { color: white; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .results-title { font-size: 15px; font-weight: 700; }
+  .match-count { background: var(--green); color: white; padding: 3px 10px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+
+  /* CARRIER CARD */
+  .carrier-card { background: white; border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: opacity 0.2s; }
+  .carrier-card.declined { opacity: 0.4; }
+  .carrier-head { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .carrier-name { font-size: 14px; font-weight: 700; color: var(--navy); flex: 1; }
+  .tier-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .tier-level { background: #d4edda; color: #155724; }
+  .tier-graded { background: #fff3cd; color: #856404; }
+  .tier-gi { background: #cce5ff; color: #004085; }
+  .tier-decline { background: #f8d7da; color: #721c24; }
+  .carrier-body { padding: 8px 14px 12px; border-top: 1px solid #f0f2f5; }
+  .carrier-note { font-size: 12px; color: #555; margin-bottom: 6px; line-height: 1.4; }
+  .carrier-range { font-size: 12px; color: #888; }
+  .warn-flag { font-size: 11px; color: var(--yellow); font-weight: 700; margin-top: 4px; }
+
+  /* GI ONLY ALERT */
+  .gi-alert { background: #fff3cd; border-radius: 10px; padding: 14px; margin-bottom: 12px; display: none; }
+  .gi-alert.show { display: block; }
+  .gi-alert-title { font-weight: 700; color: #856404; font-size: 14px; margin-bottom: 6px; }
+  .gi-alert-text { font-size: 13px; color: #856404; }
+
+  /* NO RESULTS */
+  .no-results { text-align: center; color: rgba(255,255,255,0.5); padding: 40px 20px; font-size: 14px; }
+  .no-results-icon { font-size: 40px; margin-bottom: 12px; }
+
+  @media print {
+    header, .form-side { display: none; }
+    .app { display: block; }
+    .results-side { position: static; height: auto; background: white; color: black; }
+    .carrier-card { border: 1px solid #ddd; }
+    .carrier-name { color: black; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">Carrier<span>Match</span></div>
+    <div class="tagline">Final Expense • Whole Life • IUL</div>
+  </div>
+  <button class="print-btn" onclick="window.print()">🖨️ Print Results</button>
+</header>
+
+<div class="app">
+  <!-- FORM -->
+  <div class="form-side">
+
+    <!-- ALERT: Hospice/Terminal -->
+    <div class="alert alert-danger" id="alert-hospice">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Limited options:</strong> Client may only qualify for Guaranteed Issue coverage. Aetna/Accendo GI is typically the best option. Confirm death is not expected within 12 months for any coverage to apply.</div>
+    </div>
+    <div class="alert alert-warn" id="alert-chime">
+      <span class="alert-icon">🏦</span>
+      <div><strong>Online bank detected:</strong> Several carriers do not accept Chime, Varo, or similar online-only banks. Only compatible carriers are shown as available.</div>
+    </div>
+
+    <!-- SECTION 1: CLIENT INFO -->
+    <div class="section">
+      <div class="section-title">Client Info</div>
+
+      <div class="num-row">
+        <label>Age</label>
+        <div class="num-control">
+          <button onclick="adjustAge(-1)">−</button>
+          <input type="number" id="age" value="65" min="40" max="90" onchange="recalc()">
+          <button onclick="adjustAge(1)">+</button>
+        </div>
+      </div>
+
+      <div class="toggle-pair">
+        <div style="flex:1">
+          <label>Gender</label>
+          <div class="toggle-group" id="gender">
+            <button class="active" onclick="setToggle('gender',this,'M')">Male</button>
+            <button onclick="setToggle('gender',this,'F')">Female</button>
+          </div>
+        </div>
+        <div style="flex:1">
+          <label>Tobacco/Nicotine?</label>
+          <div class="toggle-group" id="tobacco">
+            <button onclick="setToggle('tobacco',this,'Y')">Yes</button>
+            <button class="active" onclick="setToggle('tobacco',this,'N')">No</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tobacco-timing" class="sub-q">
+        <label>Last used nicotine?</label>
+        <div class="timing-btns">
+          <button class="timing-btn" onclick="setTiming('tob-timing',this,'lt12m')">Within 12 mo</button>
+          <button class="timing-btn" onclick="setTiming('tob-timing',this,'1-2yr')">1–2 years</button>
+          <button class="timing-btn active" onclick="setTiming('tob-timing',this,'2yr+')">2+ years</button>
+        </div>
+      </div>
+
+      <label style="font-size:13px;color:#666;display:block;margin-bottom:6px">State</label>
+      <select id="state" onchange="recalc()">
+        <option value="">— Select State —</option>
+        <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+        <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+        <option>DC</option><option>FL</option><option>GA</option><option>HI</option>
+        <option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+        <option>KS</option><option>KY</option><option>LA</option><option>ME</option>
+        <option>MD</option><option>MA</option><option>MI</option><option>MN</option>
+        <option>MS</option><option>MO</option><option>MT</option><option>NE</option>
+        <option>NV</option><option>NH</option><option>NJ</option><option>NM</option>
+        <option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+        <option>OK</option><option>OR</option><option>PA</option><option>RI</option>
+        <option>SC</option><option>SD</option><option>TN</option><option>TX</option>
+        <option>UT</option><option>VT</option><option>VA</option><option>WA</option>
+        <option>WV</option><option>WI</option><option>WY</option>
+      </select>
+
+      <div class="height-row">
+        <label>Height</label>
+        <select id="height-ft" onchange="recalc()">
+          <option value="4">4 ft</option><option value="5" selected>5 ft</option><option value="6">6 ft</option>
+        </select>
+        <select id="height-in" onchange="recalc()">
+          <option value="0">0 in</option><option value="1">1 in</option><option value="2">2 in</option>
+          <option value="3">3 in</option><option value="4">4 in</option><option value="5" selected>5 in</option>
+          <option value="6">6 in</option><option value="7">7 in</option><option value="8">8 in</option>
+          <option value="9">9 in</option><option value="10">10 in</option><option value="11">11 in</option>
+        </select>
+      </div>
+
+      <div class="num-row">
+        <label>Weight (lbs)</label>
+        <div class="num-control">
+          <button onclick="adjustNum('weight',-5)">−</button>
+          <input type="number" id="weight" value="175" min="80" max="450" onchange="recalc()">
+          <button onclick="adjustNum('weight',5)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: EMPLOYMENT & PAYMENT -->
+    <div class="section">
+      <div class="section-title">Financial Info</div>
+
+      <label style="font-size:13px;color:#666;display:block;margin-bottom:6px">Employment Status</label>
+      <select id="employment" onchange="recalc()">
+        <option value="">— Select —</option>
+        <option value="working">Working</option>
+        <option value="retired">Retired</option>
+        <option value="disabled">Disabled</option>
+        <option value="ss">Social Security / SSI / SSDI</option>
+      </select>
+
+      <label style="font-size:13px;color:#666;display:block;margin-bottom:6px">Payment Method</label>
+      <select id="payment" onchange="recalc()">
+        <option value="">— Select —</option>
+        <option value="checking">Checking Account (EFT)</option>
+        <option value="debit">Debit Card</option>
+        <option value="credit">Credit Card</option>
+        <option value="direct-express">Direct Express Card (SSI/SSDI)</option>
+        <option value="chime">Online-Only Bank (Chime, Varo, etc.)</option>
+      </select>
+
+      <label style="font-size:13px;color:#666;display:block;margin-bottom:6px">Monthly Income (approx)</label>
+      <select id="income" onchange="recalc()">
+        <option value="">— Select —</option>
+        <option value="under1000">Under $1,000</option>
+        <option value="1000-2000">$1,000 – $2,000</option>
+        <option value="2000-4000">$2,000 – $4,000</option>
+        <option value="4000+">Over $4,000</option>
+      </select>
+    </div>
+
+    <!-- SECTION 3: HEALTH STATUS -->
+    <div class="section">
+      <div class="section-title">Current Health Status</div>
+
+      <div class="yn-row">
+        <label>Currently in hospital, hospice, or nursing home?</label>
+        <div class="yn-btns" id="yn-hospice">
+          <button onclick="setYN('hospice',true,this)">Yes</button>
+          <button onclick="setYN('hospice',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+      <div class="yn-row">
+        <label>Currently on oxygen?</label>
+        <div class="yn-btns" id="yn-oxygen">
+          <button onclick="setYN('oxygen',true,this)">Yes</button>
+          <button onclick="setYN('oxygen',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+      <div class="yn-row">
+        <label>Currently on dialysis?</label>
+        <div class="yn-btns" id="yn-dialysis">
+          <button onclick="setYN('dialysis',true,this)">Yes</button>
+          <button onclick="setYN('dialysis',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+      <div class="yn-row">
+        <label>Wheelchair or bedridden due to illness?</label>
+        <div class="yn-btns" id="yn-wheelchair">
+          <button onclick="setYN('wheelchair',true,this)">Yes</button>
+          <button onclick="setYN('wheelchair',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+      <div class="yn-row">
+        <label>Currently incarcerated or awaiting trial?</label>
+        <div class="yn-btns" id="yn-incarcerated">
+          <button onclick="setYN('incarcerated',true,this)">Yes</button>
+          <button onclick="setYN('incarcerated',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+      <div class="yn-row">
+        <label>Terminal illness (death expected within 24 months)?</label>
+        <div class="yn-btns" id="yn-terminal">
+          <button onclick="setYN('terminal',true,this)">Yes</button>
+          <button onclick="setYN('terminal',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: MEDICAL CONDITIONS -->
+    <div class="section">
+      <div class="section-title">Medical History</div>
+      <p style="font-size:12px;color:#888;margin-bottom:12px">Tap all conditions that apply</p>
+
+      <div class="chips" id="condition-chips">
+        <div class="chip" data-cond="heart_attack" onclick="toggleChip(this)">❤️ Heart Attack</div>
+        <div class="chip" data-cond="stroke" onclick="toggleChip(this)">🧠 Stroke / TIA</div>
+        <div class="chip" data-cond="cancer" onclick="toggleChip(this)">🎗️ Cancer</div>
+        <div class="chip" data-cond="chf" onclick="toggleChip(this)">💔 Heart Failure (CHF)</div>
+        <div class="chip" data-cond="copd" onclick="toggleChip(this)">🌬️ COPD / Emphysema</div>
+        <div class="chip" data-cond="kidney" onclick="toggleChip(this)">🫘 Kidney Disease</div>
+        <div class="chip" data-cond="liver" onclick="toggleChip(this)">🔴 Liver Disease</div>
+        <div class="chip" data-cond="diabetes" onclick="toggleChip(this)">💉 Diabetes</div>
+        <div class="chip" data-cond="alzheimers" onclick="toggleChip(this)">🧩 Alzheimer's / Dementia</div>
+        <div class="chip" data-cond="als" onclick="toggleChip(this)">⚡ ALS (Lou Gehrig's)</div>
+        <div class="chip" data-cond="hiv" onclick="toggleChip(this)">🔬 AIDS / HIV</div>
+        <div class="chip" data-cond="transplant" onclick="toggleChip(this)">🏥 Organ Transplant</div>
+        <div class="chip" data-cond="heart_surgery" onclick="toggleChip(this)">🔪 Heart Surgery / Stent</div>
+        <div class="chip" data-cond="ms" onclick="toggleChip(this)">🧬 Multiple Sclerosis</div>
+        <div class="chip" data-cond="parkinsons" onclick="toggleChip(this)">🤝 Parkinson's Disease</div>
+        <div class="chip" data-cond="bipolar" onclick="toggleChip(this)">💊 Bipolar / Mental Health</div>
+      </div>
+
+      <!-- Timing sub-question for timed conditions -->
+      <div class="sub-q" id="timing-subq">
+        <label id="timing-label">How long ago diagnosed or treated?</label>
+        <div class="timing-btns">
+          <button class="timing-btn" onclick="setTiming('cond-timing',this,'lt1yr')">Under 1 year</button>
+          <button class="timing-btn" onclick="setTiming('cond-timing',this,'1-2yr')">1–2 years</button>
+          <button class="timing-btn" onclick="setTiming('cond-timing',this,'2-4yr')">2–4 years</button>
+          <button class="timing-btn active" onclick="setTiming('cond-timing',this,'4yr+')">4+ years</button>
+        </div>
+      </div>
+
+      <!-- Diabetes sub-question -->
+      <div class="sub-q" id="diabetes-subq">
+        <label>Diabetes details:</label>
+        <div class="yn-row" style="margin-bottom:8px">
+          <label style="font-size:13px">Insulin before age 50?</label>
+          <div class="yn-btns" id="yn-insulin-early">
+            <button onclick="setYN('insulin-early',true,this)">Yes</button>
+            <button onclick="setYN('insulin-early',false,this)" class="active-no">No</button>
+          </div>
+        </div>
+        <label style="font-size:13px;color:#666;display:block;margin-bottom:6px">Complications? (tap all that apply)</label>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <div class="chip" style="font-size:12px;padding:6px 10px" data-cond="diab_neuropathy" onclick="toggleChip(this)">Neuropathy</div>
+          <div class="chip" style="font-size:12px;padding:6px 10px" data-cond="diab_retinopathy" onclick="toggleChip(this)">Retinopathy</div>
+          <div class="chip" style="font-size:12px;padding:6px 10px" data-cond="diab_amputation" onclick="toggleChip(this)">Amputation</div>
+          <div class="chip" style="font-size:12px;padding:6px 10px" data-cond="diab_coma" onclick="toggleChip(this)">Insulin Shock / Coma</div>
+        </div>
+      </div>
+
+      <!-- Cancer sub-question -->
+      <div class="sub-q" id="cancer-subq">
+        <label>Cancer details:</label>
+        <div class="yn-row">
+          <label style="font-size:13px">Skin cancer only (basal/squamous cell)?</label>
+          <div class="yn-btns" id="yn-skin-cancer">
+            <button onclick="setYN('skin-cancer',true,this)">Yes</button>
+            <button onclick="setYN('skin-cancer',false,this)" class="active-no">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: MEDICATIONS -->
+    <div class="section">
+      <div class="section-title">Medications</div>
+      <div class="yn-row">
+        <label>Currently taking any prescription medications?</label>
+        <div class="yn-btns" id="yn-meds">
+          <button onclick="setYN('meds',true,this)">Yes</button>
+          <button onclick="setYN('meds',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+      <div id="meds-detail" style="display:none;margin-top:8px">
+        <label style="font-size:13px;color:#666;display:block;margin-bottom:6px">List major medications (for agent reference):</label>
+        <textarea id="meds-list" rows="3" style="width:100%;border:2px solid var(--border);border-radius:8px;padding:8px;font-size:13px;resize:vertical" placeholder="e.g. Metformin, Lisinopril, Lipitor..." oninput="recalc()"></textarea>
+        <p style="font-size:11px;color:#999;margin-top:4px">⚠️ Cross-check with each carrier's drug exclusion list before submitting</p>
+      </div>
+    </div>
+
+    <!-- SECTION 6: COVERAGE -->
+    <div class="section">
+      <div class="section-title">Coverage Desired</div>
+
+      <div class="slider-wrap">
+        <div class="slider-label">
+          <span>Coverage Amount</span>
+          <span class="slider-amount" id="coverage-display">$15,000</span>
+        </div>
+        <input type="range" id="coverage" min="5000" max="50000" step="1000" value="15000" oninput="updateSlider(this);recalc()">
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-size:11px;color:#999">$5,000</span>
+          <span style="font-size:11px;color:#999">$50,000</span>
+        </div>
+      </div>
+
+      <div class="yn-row">
+        <label>Replacing existing life insurance?</label>
+        <div class="yn-btns" id="yn-replace">
+          <button onclick="setYN('replace',true,this)">Yes</button>
+          <button onclick="setYN('replace',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+      <div class="yn-row">
+        <label>Major surgery in last 5 years?</label>
+        <div class="yn-btns" id="yn-surgery">
+          <button onclick="setYN('surgery',true,this)">Yes</button>
+          <button onclick="setYN('surgery',false,this)" class="active-no">No</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end form-side -->
+
+  <!-- RESULTS PANEL -->
+  <div class="results-side">
+    <div class="results-header">
+      <span class="results-title">Carrier Matches</span>
+      <span class="match-count" id="match-count">0 Level</span>
+    </div>
+
+    <div class="gi-alert" id="gi-only-alert">
+      <div class="gi-alert-title">⚠️ Guaranteed Issue Only</div>
+      <div class="gi-alert-text">Based on health profile, client likely qualifies for Guaranteed Issue coverage only. This means a 2-year waiting period and higher premiums.</div>
+    </div>
+
+    <div id="results-list">
+      <div class="no-results">
+        <div class="no-results-icon">📋</div>
+        Fill in client details to see carrier matches
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  age: 65, gender: 'M', tobacco: 'N', tobTiming: '2yr+',
+  state: '', heightFt: 5, heightIn: 5, weight: 175,
+  employment: '', payment: '', income: '',
+  hospice: false, oxygen: false, dialysis: false,
+  wheelchair: false, incarcerated: false, terminal: false,
+  conditions: new Set(),
+  condTiming: '4yr+',
+  insulinEarly: false, skinCancerOnly: false,
+  meds: false, replace: false, surgery: false,
+  coverage: 15000
+};
+
+// ============================================================
+// CARRIERS
+// ============================================================
+const CARRIERS = [
+  {
+    id: 'accendo', name: 'Aetna / Accendo', parent: 'CVS Health',
+    minAge: 45, maxAge: 85, minCoverage: 2000, maxCoverage: 50000,
+    chimeOk: false, directExpressOk: true, creditOk: false,
+    nyOk: false,
+    strength: 'Most lenient underwriting — accepts nearly all conditions at GI tier',
+    url: 'accendo.com',
+    notes: 'Guaranteed Issue fallback for ALS, Alzheimer\'s, dialysis, organ transplant, hospice'
+  },
+  {
+    id: 'mutual_omaha', name: 'Mutual of Omaha', parent: 'United of Omaha',
+    minAge: 45, maxAge: 85, minCoverage: 2000, maxCoverage: 40000,
+    chimeOk: false, directExpressOk: true, creditOk: false,
+    nyOk: true,
+    strength: 'Strong brand, competitive rates, Living Promise product',
+    url: 'mutualofomaha.com'
+  },
+  {
+    id: 'transamerica', name: 'Transamerica', parent: 'Transamerica',
+    minAge: 18, maxAge: 85, minCoverage: 5000, maxCoverage: 100000,
+    chimeOk: null, directExpressOk: true, creditOk: true,
+    nyOk: true,
+    strength: 'Instant decisioning in 10 min, up to $100K ages 18–75, funeral planning service',
+    url: 'transamerica.com',
+    ageMaxCoverage: { 76: 25000 }
+  },
+  {
+    id: 'americo', name: 'Americo', parent: 'Americo Financial',
+    minAge: 40, maxAge: 85, minCoverage: 5000, maxCoverage: 50000,
+    chimeOk: false, directExpressOk: true, creditOk: false,
+    nyOk: false,
+    strength: 'Quit Smoking Advantage — smokers can qualify for non-smoker rates',
+    url: 'americo.com',
+    ageMaxCoverage: { 76: 40000 }
+  },
+  {
+    id: 'foresters', name: 'Foresters Financial', parent: 'Foresters',
+    minAge: 50, maxAge: 85, minCoverage: 2000, maxCoverage: 35000,
+    chimeOk: false, directExpressOk: false, creditOk: true,
+    nyOk: false,
+    strength: 'PlanRight — fraternal benefits, accepts many conditions others decline',
+    url: 'foresters.com'
+  },
+  {
+    id: 'senior_choice', name: 'Senior Choice', parent: 'American-Amicable',
+    minAge: 50, maxAge: 85, minCoverage: 2000, maxCoverage: 50000,
+    chimeOk: false, directExpressOk: true, creditOk: false,
+    nyOk: false,
+    strength: 'Immediate, Graded, and Return of Premium plan options',
+    url: 'americanamicable.com'
+  },
+  {
+    id: 'ethos', name: 'Ethos', parent: 'TruStage / Ameritas / LGA',
+    minAge: 20, maxAge: 85, minCoverage: 2000, maxCoverage: 30000,
+    chimeOk: true, directExpressOk: false, creditOk: true,
+    nyOk: true,
+    strength: 'Online-bank friendly, digital application, multiple carriers behind it',
+    url: 'ethoslife.com'
+  },
+  {
+    id: 'american_amicable', name: 'American Amicable', parent: 'Great Plains Life',
+    minAge: 45, maxAge: 85, minCoverage: 5000, maxCoverage: 50000,
+    chimeOk: false, directExpressOk: true, creditOk: false,
+    nyOk: false,
+    strength: 'Very competitive for diabetics, pioneer plus whole life',
+    url: 'americanamicable.com'
+  },
+  {
+    id: 'corebridge', name: 'Corebridge (AIG)', parent: 'AIG',
+    minAge: 50, maxAge: 80, minCoverage: 5000, maxCoverage: 25000,
+    chimeOk: false, directExpressOk: true, creditOk: false,
+    nyOk: true,
+    strength: 'True Guaranteed Issue — no health questions at all for GIWL',
+    url: 'corebridgefinancial.com'
+  },
+  {
+    id: 'national_life', name: 'National Life Group', parent: 'Life of the Southwest',
+    minAge: 0, maxAge: 80, minCoverage: 5000, maxCoverage: 50000,
+    chimeOk: false, directExpressOk: false, creditOk: false,
+    nyOk: false,
+    strength: 'Strong IUL products, A+ rated, good for healthier clients',
+    url: 'nationallife.com'
+  }
+];
+
+// ============================================================
+// ELIGIBILITY RULES
+// Per carrier: returns 'level'|'graded'|'gi'|'decline'
+// Takes state object, returns tier string
+// ============================================================
+function getCarrierTier(carrier, s) {
+  const age = s.age;
+  const conds = s.conditions;
+  const ct = s.condTiming; // lt1yr, 1-2yr, 2-4yr, 4yr+
+
+  // Age check
+  if (age < carrier.minAge || age > carrier.maxAge) return 'decline';
+
+  // Coverage check (age-based max)
+  if (carrier.ageMaxCoverage) {
+    for (const [ageThresh, maxCov] of Object.entries(carrier.ageMaxCoverage)) {
+      if (age >= parseInt(ageThresh) && s.coverage > maxCov) return 'decline';
+    }
+  }
+
+  // Payment method
+  const pay = s.payment;
+  if (pay === 'chime' && !carrier.chimeOk) return 'decline';
+  if (pay === 'direct-express' && !carrier.directExpressOk) return 'decline';
+  if (pay === 'credit' && !carrier.creditOk) return 'decline';
+
+  // NY restriction
+  if (s.state === 'NY' && !carrier.nyOk) return 'decline';
+
+  // Instant knockouts for ALL carriers
+  if (s.incarcerated) return 'decline';
+
+  // Terminal illness
+  if (s.terminal) {
+    if (carrier.id === 'accendo') return 'gi'; // Accendo still writes if >12mo prognosis
+    return 'decline';
+  }
+
+  // ---- Per-carrier condition logic ----
+
+  if (carrier.id === 'accendo') {
+    // Accendo/Aetna — most lenient, GI fallback for almost everything
+    if (conds.has('hiv')) return 'decline';
+    if (s.hospice) return 'gi';
+    if (s.dialysis) return 'gi';
+    if (conds.has('alzheimers')) return 'gi';
+    if (conds.has('als')) return 'gi';
+    if (conds.has('transplant')) return 'gi';
+    if (s.oxygen) return 'gi';
+    if (s.wheelchair) return 'gi';
+    if (conds.has('chf')) return 'gi';
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'gi';
+      return 'level';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'gi';
+      return 'level';
+    }
+    if (conds.has('kidney')) return 'gi';
+    if (conds.has('diab_amputation') || conds.has('diab_coma')) return 'gi';
+    return 'level';
+  }
+
+  if (carrier.id === 'corebridge') {
+    // Corebridge GIWL — always GI, no health questions
+    if (s.hospice && s.terminal) return 'decline';
+    if (conds.has('hiv')) return 'decline';
+    return 'gi';
+  }
+
+  // Shared hard knockouts for remaining carriers
+  if (s.hospice || s.dialysis || conds.has('als') || conds.has('alzheimers') || conds.has('transplant')) return 'decline';
+  if (conds.has('hiv')) return 'decline';
+  if (s.wheelchair) return 'decline';
+  if (s.oxygen) return 'decline';
+
+  if (carrier.id === 'mutual_omaha') {
+    if (conds.has('chf')) return 'decline';
+    if (conds.has('kidney')) return 'decline';
+    if (conds.has('diab_amputation') || conds.has('diab_coma')) return 'decline';
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'decline';
+      if (ct === '2-4yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'graded';
+      if (ct === '1-2yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('copd')) return 'graded';
+    if (conds.has('liver')) return 'graded';
+    if (conds.has('diab_neuropathy') || conds.has('diab_retinopathy')) return 'graded';
+    return 'level';
+  }
+
+  if (carrier.id === 'transamerica') {
+    if (conds.has('chf')) return 'decline';
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr') return 'decline';
+      if (ct === '1-2yr') return 'decline';
+      return 'graded';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'decline';
+      if (ct === '1-2yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('copd')) return 'level'; // if no oxygen
+    if (conds.has('kidney')) return 'decline';
+    if (conds.has('diab_amputation') || conds.has('diab_coma')) return 'decline';
+    return 'level';
+  }
+
+  if (carrier.id === 'americo') {
+    if (conds.has('chf')) return 'gi';
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'gi';
+      return 'level';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'gi';
+      return 'level';
+    }
+    if (conds.has('copd')) return 'gi';
+    if (conds.has('kidney')) return 'gi';
+    return 'level';
+  }
+
+  if (carrier.id === 'foresters') {
+    if (conds.has('chf')) return 'graded';
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'decline';
+      return 'graded';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'graded';
+      if (ct === '1-2yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('copd')) return 'graded';
+    if (conds.has('kidney')) return 'decline';
+    if (conds.has('diab_amputation')) return 'decline';
+    if (conds.has('alzheimers')) return 'decline';
+    return 'level';
+  }
+
+  if (carrier.id === 'senior_choice') {
+    if (conds.has('chf')) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'graded'; else return 'level';
+    }
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr') return 'decline';
+      if (ct === '1-2yr' || ct === '2-4yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('copd')) return 'graded';
+    if (conds.has('kidney')) return 'graded';
+    return 'level';
+  }
+
+  if (carrier.id === 'ethos') {
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'decline';
+      return 'graded';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'decline';
+      return 'graded';
+    }
+    if (conds.has('chf')) return 'decline';
+    if (conds.has('copd')) return 'graded';
+    if (conds.has('kidney')) return 'decline';
+    return 'level';
+  }
+
+  if (carrier.id === 'american_amicable') {
+    if (conds.has('chf')) return 'graded';
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'decline';
+      return 'graded';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('copd')) return 'graded';
+    if (conds.has('kidney')) return 'graded';
+    if (conds.has('diab_amputation')) return 'decline';
+    return 'level';
+  }
+
+  if (carrier.id === 'national_life') {
+    if (conds.has('cancer') && !s.skinCancerOnly) {
+      if (ct === 'lt1yr' || ct === '1-2yr') return 'decline';
+      return 'graded';
+    }
+    if (conds.has('heart_attack') || conds.has('heart_surgery') || conds.has('stroke')) {
+      if (ct === 'lt1yr') return 'decline';
+      if (ct === '1-2yr') return 'graded';
+      return 'level';
+    }
+    if (conds.has('chf')) return 'decline';
+    if (conds.has('copd')) return 'graded';
+    if (conds.has('kidney') || conds.has('diab_amputation')) return 'decline';
+    return 'level';
+  }
+
+  return 'level';
+}
+
+// ============================================================
+// RECALC — runs on every state change
+// ============================================================
+function recalc() {
+  // Read current values
+  state.age = parseInt(document.getElementById('age').value) || 65;
+  state.state = document.getElementById('state').value;
+  state.heightFt = parseInt(document.getElementById('height-ft').value);
+  state.heightIn = parseInt(document.getElementById('height-in').value);
+  state.weight = parseInt(document.getElementById('weight').value) || 175;
+  state.employment = document.getElementById('employment').value;
+  state.payment = document.getElementById('payment').value;
+  state.income = document.getElementById('income').value;
+  state.coverage = parseInt(document.getElementById('coverage').value);
+
+  // Chime alert
+  const chimeAlert = document.getElementById('alert-chime');
+  chimeAlert.classList.toggle('show', state.payment === 'chime');
+
+  // Hospice alert
+  const hospiceAlert = document.getElementById('alert-hospice');
+  hospiceAlert.classList.toggle('show', state.hospice || state.terminal);
+
+  // Tobacco timing
+  document.getElementById('tobacco-timing').classList.toggle('show', state.tobacco === 'Y');
+
+  // Medication detail
+  document.getElementById('meds-detail').style.display = state.meds ? 'block' : 'none';
+
+  // Show timing sub-q if timed conditions selected
+  const timedConds = ['heart_attack','stroke','cancer','chf','kidney','liver','heart_surgery'];
+  const hasTimedCond = timedConds.some(c => state.conditions.has(c));
+  document.getElementById('timing-subq').classList.toggle('show', hasTimedCond);
+
+  // Diabetes sub-q
+  document.getElementById('diabetes-subq').classList.toggle('show', state.conditions.has('diabetes'));
+
+  // Cancer sub-q
+  document.getElementById('cancer-subq').classList.toggle('show', state.conditions.has('cancer'));
+
+  // Calculate results
+  const results = CARRIERS.map(c => ({
+    carrier: c,
+    tier: getCarrierTier(c, state)
+  }));
+
+  // Sort: level > graded > gi > decline
+  const tierOrder = { level: 0, graded: 1, gi: 2, decline: 3 };
+  results.sort((a, b) => tierOrder[a.tier] - tierOrder[b.tier]);
+
+  const levelCount = results.filter(r => r.tier === 'level').length;
+  const gradedCount = results.filter(r => r.tier === 'graded').length;
+  const giCount = results.filter(r => r.tier === 'gi').length;
+
+  // Match count badge
+  const mc = document.getElementById('match-count');
+  if (levelCount > 0) {
+    mc.textContent = `${levelCount} Level`;
+    mc.style.background = '#27ae60';
+  } else if (gradedCount > 0) {
+    mc.textContent = `${gradedCount} Graded`;
+    mc.style.background = '#f39c12';
+  } else if (giCount > 0) {
+    mc.textContent = `${giCount} GI Only`;
+    mc.style.background = '#3498db';
+  } else {
+    mc.textContent = 'No matches';
+    mc.style.background = '#e74c3c';
+  }
+
+  // GI only alert
+  const giOnly = levelCount === 0 && gradedCount === 0 && giCount > 0;
+  document.getElementById('gi-only-alert').classList.toggle('show', giOnly);
+
+  // Render carrier cards
+  const list = document.getElementById('results-list');
+  if (results.every(r => r.tier === 'decline') && !state.age) {
+    list.innerHTML = '<div class="no-results"><div class="no-results-icon">📋</div>Fill in client details to see carrier matches</div>';
+    return;
+  }
+
+  list.innerHTML = results.map(({carrier, tier}) => {
+    const tierLabels = { level: 'Level ✓', graded: 'Graded', gi: 'Guaranteed Issue', decline: 'Decline ✗' };
+    const tierClasses = { level: 'tier-level', graded: 'tier-graded', gi: 'tier-gi', decline: 'tier-decline' };
+
+    const maxCov = carrier.ageMaxCoverage && state.age >= Object.keys(carrier.ageMaxCoverage)[0]
+      ? Object.values(carrier.ageMaxCoverage)[0]
+      : carrier.maxCoverage;
+
+    const coverageNote = state.coverage > maxCov
+      ? `⚠️ Max $${maxCov.toLocaleString()} for age ${state.age}`
+      : `Up to $${Math.min(state.coverage, maxCov).toLocaleString()}`;
+
+    const chimeWarn = state.payment === 'chime' && !carrier.chimeOk && tier !== 'decline'
+      ? '<div class="warn-flag">⚠️ May not accept online-only bank</div>' : '';
+    const nyWarn = state.state === 'NY' && !carrier.nyOk && tier !== 'decline'
+      ? '<div class="warn-flag">⚠️ Verify NY availability</div>' : '';
+
+    return `<div class="carrier-card ${tier === 'decline' ? 'declined' : ''}">
+      <div class="carrier-head">
+        <div class="carrier-name">${carrier.name}</div>
+        <div class="tier-badge ${tierClasses[tier]}">${tierLabels[tier]}</div>
+      </div>
+      <div class="carrier-body">
+        <div class="carrier-note">${carrier.strength}</div>
+        <div class="carrier-range">${coverageNote} · Ages ${carrier.minAge}–${carrier.maxAge}</div>
+        ${chimeWarn}${nyWarn}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function adjustAge(delta) {
+  const el = document.getElementById('age');
+  el.value = Math.max(40, Math.min(90, (parseInt(el.value)||65) + delta));
+  recalc();
+}
+function adjustNum(id, delta) {
+  const el = document.getElementById(id);
+  el.value = Math.max(parseInt(el.min)||0, Math.min(parseInt(el.max)||9999, (parseInt(el.value)||0) + delta));
+  recalc();
+}
+function setToggle(group, btn, val) {
+  document.querySelectorAll(`#${group} button`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state[group] = val;
+  recalc();
+}
+function setYN(key, val, btn) {
+  state[key] = val;
+  const container = document.getElementById('yn-'+key);
+  if (!container) { recalc(); return; }
+  container.querySelectorAll('button').forEach(b => {
+    b.classList.remove('active-yes','active-no');
+  });
+  btn.classList.add(val ? 'active-yes' : 'active-no');
+  recalc();
+}
+function setTiming(key, btn, val) {
+  state[key === 'cond-timing' ? 'condTiming' : 'tobTiming'] = val;
+  btn.closest('.timing-btns').querySelectorAll('.timing-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  recalc();
+}
+function toggleChip(chip) {
+  const cond = chip.dataset.cond;
+  if (state.conditions.has(cond)) {
+    state.conditions.delete(cond);
+    chip.classList.remove('selected');
+  } else {
+    state.conditions.add(cond);
+    chip.classList.add('selected');
+  }
+  recalc();
+}
+function updateSlider(el) {
+  const val = parseInt(el.value);
+  const pct = ((val - 5000) / (50000 - 5000)) * 100;
+  el.style.setProperty('--pct', pct + '%');
+  document.getElementById('coverage-display').textContent = '$' + val.toLocaleString();
+}
+
+// Init
+updateSlider(document.getElementById('coverage'));
+recalc();
+</script>
+</body>
+</html>
